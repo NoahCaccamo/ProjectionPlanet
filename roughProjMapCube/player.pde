@@ -23,28 +23,31 @@ class Player {
 
   void display() {
     fill(255, 0, 0);
-  //switch(screen){ 
-  //  case 1:
-  //  top.rect(xpos, ypos, size, size);
-  //  break;
-  //  case 2:
-  //  side1.rect(xpos, ypos, size, size);
-  //  break;
-  //  case 3:
-  //  side2.rect(xpos, ypos, size, size);
-  //  break;
-  //}
-    if(isTop == true){
+    //switch(screen){ 
+    //  case 1:
+    //  top.rect(xpos, ypos, size, size);
+    //  break;
+    //  case 2:
+    //  side1.rect(xpos, ypos, size, size);
+    //  break;
+    //  case 3:
+    //  side2.rect(xpos, ypos, size, size);
+    //  break;
+    //}
+    if (isTop == true) {
       top.rect(xpos, ypos, size, size);
     }
-    if(isSide1 == true){
-     side1.rect(xpos, ypos, size, size);
+    if (isSide1 == true) {
+      side1.rect(xpos, ypos, size, size);
+      xpos2  = xpos - 400;
+      ypos2 = ypos;
+      side2.rect(xpos2, ypos, size, size);
     }
-    if(isSide2 == true){
-     side2.rect(xpos, ypos, size, size); 
+    if (isSide2 == true) {
+      side2.rect(xpos, ypos, size, size);
     }
-    xpos2  = xpos - 400;
-    side2.rect(xpos2, ypos, size, size);
+
+
     hbox = new Area(new Rectangle2D.Float(p1.xpos - size/2, p1.ypos - size/2, size, size));
   }
 
@@ -52,7 +55,7 @@ class Player {
     hbox = new Area(new Rectangle2D.Float(p1.xpos - size/2, p1.ypos - size/2, size, size));
   }
 
-  void keysCheckP() { //Movement system from "eraser peel" - Youtube
+  void keysCheckP() {
     if (key == 'w' || key == 'W') {
       keys[0] = true;
     }
@@ -98,59 +101,53 @@ class Player {
 
     if (keys[0] == true) {
       ypos -= mvspeed;
-      ypos2 -= mvspeed;
     }
 
 
     if (keys[1] == true) {
       ypos += mvspeed;
-      ypos2 += mvspeed;
     }
 
 
     if (keys[2] == true) {
       xpos -= mvspeed;
-      xpos2 -= mvspeed;
     }
 
     if (keys[3] == true) {
       xpos += mvspeed;
-      xpos2 += mvspeed;
     }
-      if (ypos >= top.height+20 && screen == 1) {
-        ypos = -21;
-        isTop = false;
-        isSide1 = true;
-   screen = 2; 
-  }else if(ypos <= -20 && screen == 2) {
-   screen = 1; 
-   isSide1 = false;
-   isTop = true;
-   ypos = 419;
-  }else if(xpos >= side1.width+2 && screen == 2) {
-    screen = 3;
-    isSide2 = true;
-    isSide1 = false;
-    xpos = 0;
-  }else if(ypos <= -20 && screen == 3) {
-   screen = 1;
-   isTop = true;
-   isSide2 = false;
-   ypos = 400 - xpos;
-   xpos = top.width-20;
-  }else if(xpos <= 1 && screen == 3) {
-   screen = 2;
-   isSide1 = true;
-   isSide2 = false;
-   xpos = side2.width;
-  }else if(xpos >= top.width + 20 && screen == 1) {
-    screen = 3;
-    isTop = false;
-    isSide2 = true;
-    xpos = 400-ypos;
-    ypos = 20;
+    if (ypos >= top.height+20 && screen == 1) {
+      ypos = -21;
+      isTop = false;
+      isSide1 = true;
+      screen = 2;
+    } else if (ypos <= -20 && screen == 2) {
+      screen = 1; 
+      isSide1 = false;
+      isTop = true;
+      ypos = 419;
+    } else if (xpos >= side1.width+2 && screen == 2) {
+      screen = 3;
+      isSide2 = true;
+      isSide1 = false;
+      xpos = 0;
+    } else if (ypos <= -20 && screen == 3) {
+      screen = 1;
+      isTop = true;
+      isSide2 = false;
+      ypos = 400 - xpos;
+      xpos = top.width-20;
+    } else if (xpos <= 1 && screen == 3) {
+      screen = 2;
+      isSide1 = true;
+      isSide2 = false;
+      xpos = side2.width;
+    } else if (xpos >= top.width + 20 && screen == 1) {
+      screen = 3;
+      isTop = false;
+      isSide2 = true;
+      xpos = 400-ypos;
+      ypos = 20;
+    }
   }
-  }
-  
-
 }

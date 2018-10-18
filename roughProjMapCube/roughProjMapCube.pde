@@ -10,10 +10,11 @@ PGraphics top, side1, side2;
 boolean debug = true;
 
 Player p1; 
+Tile t1,t2,t3;
 
 void setup(){
-   fullScreen(P3D);
-   //size(800,600, P3D);
+   //fullScreen(P3D);
+   size(800,600, P3D);
    rectMode(CENTER);
    
    ks = new Keystone(this);
@@ -29,15 +30,29 @@ void setup(){
    side2.rectMode(CENTER);
    
    p1 = new Player(40,1,1,5,1);
+   t1 = new Tile(50,50,40);
+    t2 = new Tile(50,50,40);
+     t3 = new Tile(50,50,40);
 }
 
 
 void draw(){
   background(0);
     p1.move();
+    
+    
+    
   top.beginDraw();
   top.background(0);
   p1.display();
+  t1.display();
+  t2.display();
+  t3.display();
+  t1.proximityColor();
+  t2.proximityColor();
+  t3.proximityColor();
+  //println(t1.saturation);
+  
   top.endDraw();
   surface1.render(top);
   

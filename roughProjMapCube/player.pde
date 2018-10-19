@@ -22,18 +22,8 @@ class Player {
   }
 
   void display() {
-    fill(255, 0, 0);
-    //switch(screen){ 
-    //  case 1:
-    //  top.rect(xpos, ypos, size, size);
-    //  break;
-    //  case 2:
-    //  side1.rect(xpos, ypos, size, size);
-    //  break;
-    //  case 3:
-    //  side2.rect(xpos, ypos, size, size);
-    //  break;
-    //}
+    top.fill(255, 0, 0);
+
     if (isTop == true) {
       top.rect(xpos, ypos, size, size);
     }

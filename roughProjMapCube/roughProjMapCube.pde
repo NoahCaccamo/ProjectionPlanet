@@ -80,7 +80,10 @@ void draw() {
 }
 
 void keyPressed() { //add new person on key press  
+if (p1.isTop == true) {
   p1.keysCheckP();
+}
+
   switch(key) {
   case 'c':
     // enter/leave calibration mode, where surfaces can be warped 

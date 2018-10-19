@@ -49,21 +49,12 @@ class Player {
     if (key == 'w' || key == 'W') {
       keys[0] = true;
     }
-
-
-
-
     if (key == 's' || key == 'S') {
       keys[1] = true;
     }
-
-
     if (key == 'a' || key == 'A') {
       keys[2] = true;
     }
-
-
-
     if (key == 'd' || key == 'D') {
       keys[3] = true;
     }
@@ -88,24 +79,22 @@ class Player {
   }
 
   void move() {
-
+if (isTop == true) {
     if (keys[0] == true) {
       ypos -= mvspeed;
     }
-
-
     if (keys[1] == true) {
       ypos += mvspeed;
     }
-
-
     if (keys[2] == true) {
       xpos -= mvspeed;
     }
-
     if (keys[3] == true) {
       xpos += mvspeed;
     }
+}else {
+ ypos--; 
+}
     if (ypos >= top.height+20 && screen == 1) {
       ypos = -21;
       isTop = false;

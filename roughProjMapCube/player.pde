@@ -6,10 +6,12 @@ class Player {
   float xpos2;
   float ypos2;
   float mvspeed;
+  float vertA;
   int screen;
-  boolean isTop;
-  boolean isSide1;
-  boolean isSide2;
+  boolean isTop, isSide1, isSide2;
+  boolean airborne = true;
+  boolean canLeft = true, canRight = true;
+  int mode = 1;
   Area hbox;
 
   Player(float isize, float ixpos, float iypos, float imvspeed, int iscreen) {
@@ -22,14 +24,32 @@ class Player {
   }
 
   void display() {
+    
+    switch (mode) {
+      case 1:
     top.fill(255, 0, 0);
-
+    side1.fill(255,0,0);
+    side2.fill(255,0,0);
+    break;
+    
+    case 2:
+    top.fill(0, 255, 0);
+    side1.fill(0,255,0);
+    side2.fill(0,255,0);
+    break;
+    
+    case 3:
+    top.fill(0, 0, 255);
+    side1.fill(0,0,255);
+    side2.fill(0,0,255);
+    break;
+    }
     if (isTop == true) {
       top.rect(xpos, ypos, size, size);
     }
     if (isSide1 == true) {
       side1.rect(xpos, ypos, size, size);
-      xpos2  = xpos - 400;
+      xpos2  = xpos - sideSize;
       ypos2 = ypos;
       side2.rect(xpos2, ypos, size, size);
     }
@@ -93,10 +113,23 @@ if (isTop == true) {
       xpos += mvspeed;
     }
 }else {
- ypos--; 
+  
+  if (keys[2] == true && canLeft == true) {
+      xpos -= mvspeed;
+    }
+    if (keys[3] == true && canRight == true) {
+      xpos += mvspeed;
+    }
+  
+ vertA--;
+ if (ypos+p1.size/2 >= sideSize) {
+  vertA = 0; 
+  ypos = sideSize - p1.size;
+ }
+ ypos -= vertA;
 }
     if (ypos >= top.height+20 && screen == 1) {
-      ypos = -21;
+      ypos = -19;
       isTop = false;
       isSide1 = true;
       screen = 2;
@@ -104,7 +137,7 @@ if (isTop == true) {
       screen = 1; 
       isSide1 = false;
       isTop = true;
-      ypos = 419;
+      ypos = topSize + 19;
     } else if (xpos >= side1.width+2 && screen == 2) {
       screen = 3;
       isSide2 = true;
@@ -114,7 +147,7 @@ if (isTop == true) {
       screen = 1;
       isTop = true;
       isSide2 = false;
-      ypos = 400 - xpos;
+      ypos = top.height - xpos;
       xpos = top.width-20;
     } else if (xpos <= 1 && screen == 3) {
       screen = 2;
@@ -128,5 +161,21 @@ if (isTop == true) {
       xpos = 400-ypos;
       ypos = 20;
     }
+  }
+  
+  void toggleMode2() {
+   if (mode != 2) {
+    mode = 2; 
+   }else {
+    mode = 1; 
+   }
+  }
+  
+  void toggleMode3() {
+    if (mode != 3) {
+    mode = 3; 
+   }else {
+    mode = 1; 
+   }
   }
 }

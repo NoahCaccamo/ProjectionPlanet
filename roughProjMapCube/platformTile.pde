@@ -21,24 +21,26 @@ void chooseSide(PGraphics targetSide) {
   
 
   void playerCollision() {
-    if (p1.screen == 2 && p1.ypos + p1.size/2 >= ypos - size/2 && p1.ypos+p1.size/2 < ypos + size/2 && p1.xpos + size/2 > xpos - size/2 && p1.xpos - size/2 < xpos + size/2) {
+    if (p1.screen == side && p1.ypos + p1.size/2 >= ypos - size/2 && p1.ypos+p1.size/2 < ypos + size/2 && p1.xpos + size/2 > xpos - size/2 && p1.xpos - size/2 < xpos + size/2) {
       p1.ypos = ypos - size;
       p1.vertA = 0;
       p1.airborne = false;
     }
     
-    if (p1.screen == 2 && p1.ypos -p1.size/2 <= ypos + size/2 && p1.ypos-p1.size/2 > ypos - size/2 && p1.xpos + size/2 > xpos - size/2 && p1.xpos - size/2 < xpos + size/2) {
+    if (p1.screen == side && p1.ypos -p1.size/2 <= ypos + size/2 && p1.ypos-p1.size/2 > ypos - size/2 && p1.xpos + size/2 > xpos - size/2 && p1.xpos - size/2 < xpos + size/2) {
      if (p1.vertA > 0) {
       p1.vertA = 0; 
      }
     }
     
-    if(p1.screen == 2 && p1.xpos + p1.size/2 >= xpos - size/2 && p1.xpos + p1.size/2 < xpos + size/2 && (p1.ypos + p1.size/2)-1 >= ypos - size/2 && (p1.ypos - size/2)+1 <= ypos+size/2) {
+    if(p1.screen == side && p1.xpos + p1.size/2 >= xpos - size/2 && p1.xpos + p1.size/2 < xpos + size/2 && (p1.ypos + p1.size/2)-1 >= ypos - size/2 && (p1.ypos - size/2) <= ypos+size/2) {
      p1.xpos = xpos - size;
+     p1.canRight = false;
     }
     
-    if(p1.screen == 2 && p1.xpos - p1.size/2 <= xpos + size/2 && p1.xpos - p1.size/2 > xpos - size/2 && (p1.ypos + p1.size/2)-1 >= ypos - size/2 && (p1.ypos - size/2)+1 <= ypos+size/2) {
+    if(p1.screen == side && p1.xpos - p1.size/2 <= xpos + size/2 && p1.xpos - p1.size/2 > xpos - size/2 && (p1.ypos + p1.size/2)-1 >= ypos - size/2 && (p1.ypos - size/2) <= ypos+size/2) {
       p1.xpos = xpos + size;
+      p1.canLeft = false;
     }
   }
 }

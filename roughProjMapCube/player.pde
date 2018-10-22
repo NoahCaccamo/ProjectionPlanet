@@ -142,7 +142,7 @@ if (isTop == true) {
       screen = 3;
       isSide2 = true;
       isSide1 = false;
-      xpos = 0;
+      xpos = 2;
     } else if (ypos <= -20 && screen == 3) {
       screen = 1;
       isTop = true;

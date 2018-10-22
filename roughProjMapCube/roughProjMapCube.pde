@@ -21,15 +21,19 @@ int posA;
 
 PGraphics top, side1, side2;
 PImage topMap, side1Map, side2Map, legend;
-int tileNum, waterTileNum, crystalTileNum, platformTileNum, fgTileNum, bgTileNum;
+int tileNum, waterTileNum, platformTileNum, fgTileNum, bgTileNum, crystalTileNum, mushroomTileNum;
 
 boolean debug = true;
 
 ArrayList<Tile> tiles = new ArrayList<Tile>();
 ArrayList<waterTile> waterTiles = new ArrayList<waterTile>();
 ArrayList<PlatformTile> Ptiles = new ArrayList<PlatformTile>();
+ArrayList<PlatformTile> PtilesSide2 = new ArrayList<PlatformTile>();
 ArrayList<fgTile> fgTiles = new ArrayList<fgTile>();
 ArrayList<bgTile> bgTiles = new ArrayList<bgTile>();
+ArrayList<bgTile> bgTilesSide2 = new ArrayList<bgTile>();
+ArrayList<crystalTile> crystalTiles = new ArrayList<crystalTile>();
+ArrayList<mushroomTile> mushroomTiles = new ArrayList<mushroomTile>();
 
 Player p1; 
 Tile t1, t2, t3;
@@ -37,7 +41,7 @@ Tile t1, t2, t3;
 int topSize = 800;
 int sideSize = 800;
 int tileSize = 40;
-float basicTopCompletion, waterTopCompletion, platformSide1Completion, bgSide1Completion, fgSide1Completion;
+float basicTopCompletion, waterTopCompletion, platformSide1Completion, bgSide1Completion, fgSide1Completion, crystalSide2Completion, mushroomSide2Completion, platformSide2Completion, bgSide2Completion;
 void setup() {
   fullScreen(P3D);
   //size(800, 600, P3D);
@@ -49,10 +53,12 @@ void setup() {
 
   topMap = loadImage("tPlanet.png");
   side1Map = loadImage("side1Map.png");
+  side2Map = loadImage("side2Map.png");
   legend = loadImage("tileLegend.png");
   setLegend();
   parseMap(topMap, 1);
   parseMap(side1Map, 2);
+  parseMap(side2Map, 3);
   ks = new Keystone(this);
   surface1 = ks.createCornerPinSurface(topSize, topSize, 20);
   surface2 = ks.createCornerPinSurface(sideSize, sideSize, 20);
@@ -66,10 +72,11 @@ void setup() {
   side2.rectMode(CENTER);
 
   p1 = new Player(40, 1, 1, 5, 1);
-
 }
 
 void draw() {
+  p1.canLeft = true;
+  p1.canRight = true;
   background(0);
   p1.move();
 
@@ -79,73 +86,51 @@ void draw() {
   top.background(0);
 
   //Update Top Tiles
-  basicTopCompletion = 0;
-  for (int i=0; i < tiles.size(); i++) {
-    Tile getTile = tiles.get(i);
-    getTile.proximityColor();
-    getTile.display();
-    basicTopCompletion += getTile.saturation;
-  }
-  basicTopCompletion /= tiles.size();
+  updateTiles(0);
 
   //Update Top Water Tiles
-  waterTopCompletion = 0;
-  for (int i=0; i < waterTiles.size(); i++) {
-    waterTile getTile = waterTiles.get(i);
-    getTile.proximityColor();
-    getTile.display();
-    waterTopCompletion += getTile.saturation;
-  }
-  waterTopCompletion /= waterTiles.size();
+  updateTiles(1);
 
   p1.display();
   top.endDraw();
   surface1.render(top);
-  //////////////////////////////////////////////////////////////
+  ////////////////////SIDE 1 DRAW//////////////////////////////////////////
   side1.beginDraw();
   side1.background(0);
 
 
- 
-//update bg tiles
-bgSide1Completion = 0;
-    for (int i=0; i < bgTiles.size(); i++) {
-    bgTile getTile = bgTiles.get(i);
-    getTile.proximityColor();
-    getTile.display();
-    bgSide1Completion += getTile.saturation;
-  }
-bgSide1Completion /= bgTiles.size();
+
+  //update bg tiles
+  updateTiles(2);
 
   //Update Platform Tiles
-  platformSide1Completion = 0;
-  for (int i=0; i < Ptiles.size(); i++) {
-    PlatformTile getTile = Ptiles.get(i);
-    getTile.proximityColor();
-    getTile.display();
-    getTile.playerCollision();
-    platformSide1Completion += getTile.saturation;
-  }
-  platformSide1Completion /= Ptiles.size();
+  updateTiles(3);
 
- p1.display();
-  
+  p1.display();
+
   //foreground update
-  fgSide1Completion = 0;
-    for (int i=0; i < fgTiles.size(); i++) {
-    fgTile getTile = fgTiles.get(i);
-    getTile.proximityColor();
-    getTile.display();
-    fgSide1Completion += getTile.saturation;
-  }
-  fgSide1Completion /= fgTiles.size();
-  
+  updateTiles(4);
+
   side1.endDraw();
   surface2.render(side1);
-
+//////////////////////////SIDE 2 DRAW////////////////////////////////////////
   side2.beginDraw();
   side2.background(0);
+  
+  //update BG Tiles
+  updateTiles(7);
+  
+  //update Platform Tiles
+  updateTiles(6);
+  
   p1.display();
+  
+  //update crystal tiles
+  updateTiles(5);
+  
+  //update Mushroom Tiles
+  updateTiles(8);
+  
   side2.endDraw();
   surface3.render(side2);
 
@@ -200,4 +185,109 @@ void keyPressed() { //add new person on key press
 
 void keyReleased() {
   p1.keysCheckR();
+}
+
+void updateTiles(int selectedArray) {
+  switch (selectedArray) {
+  case 0:
+    basicTopCompletion = 0;
+    for (int i=0; i < tiles.size(); i++) {
+      Tile getTile = tiles.get(i);
+      getTile.proximityColor();
+      getTile.display();
+      basicTopCompletion += getTile.saturation;
+    }
+    basicTopCompletion /= tiles.size();
+    break;
+
+  case 1:
+    waterTopCompletion = 0;
+    for (int i=0; i < waterTiles.size(); i++) {
+      waterTile getTile = waterTiles.get(i);
+      getTile.proximityColor();
+      getTile.display();
+      waterTopCompletion += getTile.saturation;
+    }
+    waterTopCompletion /= waterTiles.size();
+    break;
+
+  case 2:
+bgSide1Completion = 0;
+  for (int i=0; i < bgTiles.size(); i++) {
+    bgTile getTile = bgTiles.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    bgSide1Completion += getTile.saturation;
+  }
+  bgSide1Completion /= bgTiles.size();
+    break;
+
+  case 3:
+platformSide1Completion = 0;
+  for (int i=0; i < Ptiles.size(); i++) {
+    PlatformTile getTile = Ptiles.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    getTile.playerCollision();
+    platformSide1Completion += getTile.saturation;
+  }
+  platformSide1Completion /= Ptiles.size();
+    break;
+
+  case 4:
+fgSide1Completion = 0;
+  for (int i=0; i < fgTiles.size(); i++) {
+    fgTile getTile = fgTiles.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    fgSide1Completion += getTile.saturation;
+  }
+  fgSide1Completion /= fgTiles.size();
+    break;
+
+  case 5:
+    crystalSide2Completion = 0;
+      for (int i=0; i < crystalTiles.size(); i++) {
+      crystalTile getTile = crystalTiles.get(i);
+      getTile.proximityColor();
+      getTile.display();
+      crystalSide2Completion += getTile.saturation;
+    }
+  crystalSide2Completion /= crystalTiles.size();
+    break;
+
+  case 6:
+platformSide2Completion = 0;
+  for (int i=0; i < PtilesSide2.size(); i++) {
+    PlatformTile getTile = PtilesSide2.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    getTile.playerCollision();
+    platformSide2Completion += getTile.saturation;
+  }
+  platformSide2Completion /= PtilesSide2.size();
+    break;
+    
+    case 7:
+    bgSide2Completion = 0;
+  for (int i=0; i < bgTilesSide2.size(); i++) {
+    bgTile getTile = bgTilesSide2.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    bgSide2Completion += getTile.saturation;
+  }
+  bgSide2Completion /= bgTilesSide2.size();
+  break;
+  
+  case 8:
+  mushroomSide2Completion = 0;
+  for (int i=0; i < mushroomTiles.size(); i++) {
+    mushroomTile getTile = mushroomTiles.get(i);
+    getTile.proximityColor();
+    getTile.display();
+    mushroomSide2Completion += getTile.saturation;
+  }
+  mushroomSide2Completion /= mushroomTiles.size();
+  break;
+  }
 }

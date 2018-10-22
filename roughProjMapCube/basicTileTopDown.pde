@@ -32,7 +32,7 @@ class Tile {
     targetSide.stroke(0);
     targetSide.colorMode(RGB);
   }
-  
+
   void display() {
     switch(side) {
 
@@ -46,13 +46,13 @@ class Tile {
       chooseSide(side2);
       break;
     }
-      
-      if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
+
+    if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
       tempSaturation --;
     }
   }
-  
-    void display(PGraphics targetSide) {
+
+  void display(PGraphics targetSide) {
 
     targetSide.colorMode(HSB, 360, 100, 100);
     targetSide.noStroke();
@@ -68,13 +68,19 @@ class Tile {
 
   void proximityColor() {
     if (p1.screen == side) {
-      maxSaturation = map(distPlayer(p1), 100, 0, 0, 100);
+      maxSaturation = map(distPlayer(p1), 125, 0, 0, 100);
+      if (side == 3) {
+       maxSaturation = map(distPlayer(p1), 400, 0, 0, 100); 
+      }
       if (maxSaturation > 100) {
         maxSaturation = 100;
       } else if (maxSaturation < 0) {
         maxSaturation = 0;
       }
-      float valueAdd =  map(distPlayer(p1), 0, 100, 2, 0);
+      float valueAdd =  map(distPlayer(p1), 0, 125, 2, 0);
+       if (side == 3) {
+       valueAdd = map(distPlayer(p1), 0, 400, 2, 0); 
+      }
       if (valueAdd > 0) {
         canFade = false;
         if (saturation+tempSaturation < 100 && saturation+tempSaturation < maxSaturation && p1.mode == 1) {
@@ -105,5 +111,14 @@ class Tile {
 
   float distPlayer(Player p) {
     return dist(p.xpos, p.ypos, xpos, ypos);
+  }
+
+  public float updateTile(int size) {
+    float completion = 0;
+    proximityColor();
+    display();
+    completion += saturation;
+    completion /= size;
+    return completion;
   }
 }

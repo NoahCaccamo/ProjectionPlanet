@@ -1,5 +1,6 @@
 class bgTile extends Tile {
 
+  bgTile(){}
   bgTile(float ixpos, float iypos, float isize, int iside) {
     xpos = ixpos;
     ypos = iypos;

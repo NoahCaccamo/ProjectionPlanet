@@ -2,7 +2,7 @@ void musicProgression() {
   //basicTopCompletion
   //waterTopCompletion
   //crystalSide2Completion, mushroomSide2Completion, platformSide2Completion, bgSide2Completion
-
+  //secondTopCompletion, secondWaterTopCompletion, secondPlatformSide1Completion, secondBgSide1Completion, secondPlatformSide2Completion, secondBgSide2Completion
   //top
   float basicTopConverted = map(basicTopCompletion, 0, 100, -50, -1);
   float waterTopConverted = map(waterTopCompletion, 0, 100, -50, -4);
@@ -16,6 +16,14 @@ void musicProgression() {
   float bgSide2Converted = map(bgSide2Completion, 0, 100, -70, 0);
   float platformSide2Converted = map(platformSide2Completion, 0, 100, -70, 0);
 
+  //top2
+  float secondTopConverted = map(secondTopCompletion, 0, 100, -70, 0);
+  float secondWaterTopConverted = map(secondWaterTopCompletion, 0, 100, -70, 0);
+  float secondPlatformSide1Converted = map(secondPlatformSide1Completion, 0, 100, -70, 0);
+  float secondBgSide1Converted = map(secondBgSide1Completion, 0, 100, -70, 0);
+  float secondPlatformSide2Converted = map(secondPlatformSide2Completion, 0, 100, -70, 0);
+  float secondBgSide2Converted = map(secondBgSide2Completion, 0, 100, -70, 0);
+
   pb.setGain(basicTopConverted);
   po.setGain(waterTopConverted);
 
@@ -26,32 +34,34 @@ void musicProgression() {
   pc.setGain(crystalSide2Converted - 3);
   pd.setGain(crystalSide2Converted - 3);
   pf.setGain(crystalSide2Converted - 3);
-  pw.setGain(crystalSide2Converted - 1);
+
 
   pe.setGain(mushroomSide2Converted - 5);
-  pg.setGain(mushroomSide2Converted - 2);
-  ph.setGain(mushroomSide2Converted - 5);
+  pg.setGain(mushroomSide2Converted - 4);
   pn.setGain(mushroomSide2Converted - 3);
   pq.setGain(mushroomSide2Converted - 6);
-  ps.setGain(mushroomSide2Converted - 3);
-  pt.setGain(mushroomSide2Converted - 10);
   pv.setGain(mushroomSide2Converted - 6);
   pz1.setGain(mushroomSide2Converted - 2);
-  pz2.setGain(mushroomSide2Converted - 5);
-
-
 
   pg.setGain(bgSide2Converted - 2);
   pj.setGain(bgSide2Converted-3);
   pn.setGain(bgSide2Converted - 4.5);
-  pp.setGain(bgSide2Converted - 10);
   pr.setGain(bgSide2Converted - 6);
   pz.setGain(bgSide2Converted - 2);
 
   pk.setGain(platformSide2Converted - 4);
   pl.setGain(platformSide2Converted - 4);
   pm.setGain(platformSide2Converted - 4);
-  pu.setGain(platformSide2Converted - 7);
+
+  pw.setGain(secondTopConverted);
+  ps.setGain(secondWaterTopConverted - 13);
+
+  pz2.setGain(secondBgSide1Converted - 5);
+  pt.setGain(secondPlatformSide1Converted - 10);
+
+  ph.setGain(secondBgSide2Converted - 5);
+    pp.setGain(secondPlatformSide2Converted - 10);
+      pu.setGain(secondPlatformSide2Converted - 7);
 }
 
 void rewindAll() {
@@ -140,7 +150,7 @@ void syncSongs() {
   thread("sM");
   thread("sN");
   thread("sO");
-  thread("sS");
+  thread("sP");
   thread("sQ");
   thread("sR");
   thread("sS");

@@ -30,15 +30,19 @@ void setLegend () {
     case 6:
       mushroomTileNum = tileColor;
       break;
-      
-      case 7:
+
+    case 7:
       pitfallTileNum = tileColor;
+      break;
+      
+      case 8:
+      waterfallTileNum = tileColor;
       break;
     }
   }
 }
 
-  void parseMap (PImage map, int side) {
+void parseMap (PImage map, int side) {
   for (int y=0; y < topSize/tileSize; y += 1) {
     for (int x=0; x < topSize/tileSize; x += 1) {
 
@@ -46,30 +50,42 @@ void setLegend () {
       if (tileColor == tileNum) {
         if (side == 1) {
           tiles.add(new Tile(x*tileSize, y*tileSize, tileSize, side));
-        }else if (side == 4) {
+        } else if (side == 4) {
           secondTiles.add(new Tile(x*tileSize, y*tileSize, tileSize, side));
         }
       } else if (tileColor == waterTileNum) {
         if (side == 1) {
           waterTiles.add(new waterTile(x*tileSize, y*tileSize, tileSize, side));
+        } else if (side == 4) {
+          secondWaterTiles.add(new waterTile(x*tileSize, y*tileSize, tileSize, side));
         }
       } else if (tileColor == platformTileNum) {
         if (side == 2) {
           Ptiles.add(new PlatformTile(x*tileSize, y*tileSize, tileSize, side));
         } else if (side == 3) {
           PtilesSide2.add(new PlatformTile(x*tileSize, y*tileSize, tileSize, side));
+        } else if (side == 5) {
+          secondPtiles.add(new PlatformTile(x*tileSize, y*tileSize, tileSize, side));
+        } else if (side == 6) {
+          secondPtilesSide2.add(new PlatformTile(x*tileSize, y*tileSize, tileSize, side));
         }
       } else if (tileColor == fgTileNum) {
         if (side == 2) {
           fgTiles.add(new fgTile(x*tileSize, y*tileSize, tileSize, side));
         } else if (side == 3) {
           //ADD FGTILES TO SIDE 2
+        }else if(side == 5) {
+         secondfgTiles.add(new fgTile(x*tileSize, y*tileSize, tileSize, side)); 
         }
       } else if (tileColor == bgTileNum) {
         if (side == 2) {
           bgTiles.add(new bgTile(x*tileSize, y*tileSize, tileSize, side));
         } else if (side == 3) {
           bgTilesSide2.add(new bgTile(x*tileSize, y*tileSize, tileSize, side));
+        }else if (side == 5) {
+          secondbgTiles.add(new bgTile(x*tileSize, y*tileSize, tileSize, side));
+        } else if (side == 6) {
+         secondbgTilesSide2.add(new bgTile(x*tileSize, y*tileSize, tileSize, side));
         }
       } else if (tileColor == crystalTileNum) {
         if (side == 3) {
@@ -79,10 +95,11 @@ void setLegend () {
         if (side == 3) {
           mushroomTiles.add(new mushroomTile(x*tileSize, y*tileSize, tileSize, side));
         }
-      }else if (tileColor == pitfallTileNum) {
+      } else if (tileColor == pitfallTileNum) {
 
         pitfallTiles.add(new pitfallTile(x*tileSize, y*tileSize, tileSize, side));
-       
+      }else if (tileColor == waterfallTileNum) {
+       waterfallTiles.add(new waterfallTile(x*tileSize, y*tileSize, tileSize, side));
       }
     }
   }

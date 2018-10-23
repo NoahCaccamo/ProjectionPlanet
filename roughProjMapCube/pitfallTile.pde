@@ -14,9 +14,7 @@ class pitfallTile extends Tile {
   void playerFall(Player player) {
     if (player.screen == side && player.canFall == true && distPlayer(player) < 20) {
       player.ypos = -19;
-      player.isTop = false;
-      player.isSide1 = true;
-      player.screen = 2;
+      player.screen += 1;
       player.canFall = false;
       falling = true;
       colorMode(RGB);

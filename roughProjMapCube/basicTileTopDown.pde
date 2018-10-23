@@ -50,6 +50,12 @@ class Tile {
     case 4:
       chooseSide(secondTop);
       break;
+      case 5:
+      chooseSide(secondSide1);
+      break;
+      case 6:
+      chooseSide(secondSide2);
+      break;
     }
 
     if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
@@ -74,7 +80,7 @@ class Tile {
   void proximityColor(Player player) {
     if (player.screen == side) {
       maxSaturation = map(distPlayer(player), 125, 0, 0, 100);
-      if (side == 3) {
+      if (side == 3 | side == 6) {
         maxSaturation = map(distPlayer(player), 400, 0, 0, 100);
       }
       if (maxSaturation > 100) {
@@ -83,7 +89,7 @@ class Tile {
         maxSaturation = 0;
       }
       float valueAdd =  map(distPlayer(player), 0, 125, 2, 0);
-      if (side == 3) {
+      if (side == 3| side == 6) {
         valueAdd = map(distPlayer(player), 0, 400, 2, 0);
       }
       if (valueAdd > 0) {

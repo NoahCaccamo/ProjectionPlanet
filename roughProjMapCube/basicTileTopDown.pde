@@ -24,6 +24,8 @@ class Tile {
       brightness = 100;
     }
   }
+  
+
   void chooseSide(PGraphics targetSide) {
     targetSide.colorMode(HSB, 360, 100, 100);
     targetSide.noStroke();
@@ -45,6 +47,9 @@ class Tile {
     case 3:
       chooseSide(side2);
       break;
+    case 4:
+      chooseSide(secondTop);
+      break;
     }
 
     if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
@@ -52,43 +57,43 @@ class Tile {
     }
   }
 
-  void display(PGraphics targetSide) {
+  //void display(PGraphics targetSide) {
 
-    targetSide.colorMode(HSB, 360, 100, 100);
-    targetSide.noStroke();
-    targetSide.fill(hue, saturation + tempSaturation, brightness);
-    targetSide.rect(xpos, ypos, size, size);
-    targetSide.stroke(0);
-    targetSide.colorMode(RGB);
+  //  targetSide.colorMode(HSB, 360, 100, 100);
+  //  targetSide.noStroke();
+  //  targetSide.fill(hue, saturation + tempSaturation, brightness);
+  //  targetSide.rect(xpos, ypos, size, size);
+  //  targetSide.stroke(0);
+  //  targetSide.colorMode(RGB);
 
-    if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
-      tempSaturation --;
-    }
-  }
+  //  if (frameCount % 2 == 0 && saturation+tempSaturation > 0 && canFade == true) {
+  //    tempSaturation --;
+  //  }
+  //}
 
-  void proximityColor() {
-    if (p1.screen == side) {
-      maxSaturation = map(distPlayer(p1), 125, 0, 0, 100);
+  void proximityColor(Player player) {
+    if (player.screen == side) {
+      maxSaturation = map(distPlayer(player), 125, 0, 0, 100);
       if (side == 3) {
-       maxSaturation = map(distPlayer(p1), 400, 0, 0, 100); 
+        maxSaturation = map(distPlayer(player), 400, 0, 0, 100);
       }
       if (maxSaturation > 100) {
         maxSaturation = 100;
       } else if (maxSaturation < 0) {
         maxSaturation = 0;
       }
-      float valueAdd =  map(distPlayer(p1), 0, 125, 2, 0);
-       if (side == 3) {
-       valueAdd = map(distPlayer(p1), 0, 400, 2, 0); 
+      float valueAdd =  map(distPlayer(player), 0, 125, 2, 0);
+      if (side == 3) {
+        valueAdd = map(distPlayer(player), 0, 400, 2, 0);
       }
       if (valueAdd > 0) {
         canFade = false;
-        if (saturation+tempSaturation < 100 && saturation+tempSaturation < maxSaturation && p1.mode == 1) {
+        if (saturation+tempSaturation < 100 && saturation+tempSaturation < maxSaturation && player.mode == 1) {
           tempSaturation += valueAdd;
-        } else if (valueAdd > 0 && saturation < 100 && p1.mode == 2) {
+        } else if (valueAdd > 0 && saturation < 100 && player.mode == 2) {
           saturation += valueAdd; 
           canFade = true;
-        } else if (p1.mode == 3) {
+        } else if (player.mode == 3) {
           saturation --;
           canFade = true;
         }
@@ -113,12 +118,12 @@ class Tile {
     return dist(p.xpos, p.ypos, xpos, ypos);
   }
 
-  public float updateTile(int size) {
-    float completion = 0;
-    proximityColor();
-    display();
-    completion += saturation;
-    completion /= size;
-    return completion;
-  }
+  //  public float updateTile(int size) {
+  //    float completion = 0;
+  //    proximityColor();
+  //    display();
+  //    completion += saturation;
+  //    completion /= size;
+  //    return completion;
+  //  }
 }

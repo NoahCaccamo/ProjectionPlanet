@@ -1,7 +1,7 @@
 void pA() {
   pa = minim.loadFile("a.wav");
   pa.loop();
-pa.setGain(-100);
+pa.setGain(0);
   pa.rewind();
 }
 

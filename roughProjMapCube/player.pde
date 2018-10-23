@@ -11,7 +11,10 @@ class Player {
   boolean isTop, isSide1, isSide2;
   boolean airborne = true;
   boolean canLeft = true, canRight = true;
+  boolean canFall = true;
+  int fallTimer;
   int mode = 1;
+  float resolveSpeed;
   Area hbox;
 
   Player(float isize, float ixpos, float iypos, float imvspeed, int iscreen) {
@@ -24,6 +27,13 @@ class Player {
   }
 
   void display() {
+    if (canFall == false) {
+      fallTimer ++;
+      if (fallTimer >= 120) {
+        fallTimer = 0;
+        canFall = true;
+      }
+    }
     
     switch (mode) {
       case 1:
@@ -99,6 +109,10 @@ class Player {
   }
 
   void move() {
+    if (resolveSpeed > 0) {
+    ypos -= resolveSpeed;
+    resolveSpeed --;
+    }
 if (isTop == true) {
     if (keys[0] == true) {
       ypos -= mvspeed;
@@ -122,9 +136,9 @@ if (isTop == true) {
     }
   
  vertA--;
- if (ypos+p1.size/2 >= sideSize) {
+ if (ypos+size/2 >= sideSize) {
   vertA = 0; 
-  ypos = sideSize - p1.size;
+  ypos = sideSize - size;
  }
  ypos -= vertA;
 }
@@ -133,11 +147,14 @@ if (isTop == true) {
       isTop = false;
       isSide1 = true;
       screen = 2;
-    } else if (ypos <= -20 && screen == 2) {
+      canFall = false;
+    } else if (ypos <= -20 && screen == 2 && canFall == true) {
       screen = 1; 
       isSide1 = false;
       isTop = true;
       ypos = topSize + 19;
+      canFall = false;
+      resolveSpeed = 10;
     } else if (xpos >= side1.width+2 && screen == 2) {
       screen = 3;
       isSide2 = true;
@@ -161,6 +178,17 @@ if (isTop == true) {
       xpos = 400-ypos;
       ypos = 20;
     }
+    
+    if (screen == 1 && xpos + size > topSize|| screen == 4 && xpos + size > topSize) {
+     xpos = topSize - size; 
+    }else if (screen == 1 && xpos < 0) {
+     xpos = 0; 
+    }else if (screen == 1 && ypos + size > topSize) {
+     ypos = topSize - size; 
+    }else if (screen == 1 && ypos < 0) {
+      ypos = 0;
+    }
+    
   }
   
   void toggleMode2() {

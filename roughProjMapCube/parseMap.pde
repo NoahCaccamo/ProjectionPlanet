@@ -30,6 +30,10 @@ void setLegend () {
     case 6:
       mushroomTileNum = tileColor;
       break;
+      
+      case 7:
+      pitfallTileNum = tileColor;
+      break;
     }
   }
 }
@@ -42,6 +46,8 @@ void setLegend () {
       if (tileColor == tileNum) {
         if (side == 1) {
           tiles.add(new Tile(x*tileSize, y*tileSize, tileSize, side));
+        }else if (side == 4) {
+          secondTiles.add(new Tile(x*tileSize, y*tileSize, tileSize, side));
         }
       } else if (tileColor == waterTileNum) {
         if (side == 1) {
@@ -73,6 +79,10 @@ void setLegend () {
         if (side == 3) {
           mushroomTiles.add(new mushroomTile(x*tileSize, y*tileSize, tileSize, side));
         }
+      }else if (tileColor == pitfallTileNum) {
+
+        pitfallTiles.add(new pitfallTile(x*tileSize, y*tileSize, tileSize, side));
+       
       }
     }
   }
